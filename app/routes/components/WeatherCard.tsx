@@ -25,7 +25,14 @@ export default function WeatherCard() {
       }
     };
 
+    // Ambil data pertama kali
     fetchWeather();
+
+    // Ambil data setiap 10 detik
+    const interval = setInterval(fetchWeather, 10000);
+
+    // Bersihkan interval saat komponen di-unmount
+    return () => clearInterval(interval);
   }, []);
 
   return (
