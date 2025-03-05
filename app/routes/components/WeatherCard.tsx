@@ -80,24 +80,32 @@ export default function WeatherCard() {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-      <h1 className="text-2xl font-bold">Cuaca di {CITY}</h1>
-      {weather ? (
-        <>
-          <p className="text-lg">🌡 Suhu: {weather.temperature}°C</p>
-          <p className="text-lg">💨 Kecepatan Angin: {weather.windspeed} km/h</p>
-          <p className="text-lg">🧭 Arah Angin: {weather.winddirection}°</p>
-          <p className="text-lg">🌤 Kondisi: {getWeatherDescription(weather.weathercode)}</p>
-          <h2 className="text-xl font-bold mt-4">Prediksi Cuaca</h2>
-          {forecast.map((f, index) => (
-            <p key={index} className="text-lg">
-              {new Date(f.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}: 🌡 {f.temperature}°C - {getWeatherDescription(f.weathercode)}
-            </p>
-          ))}
-        </>
-      ) : (
-        <p>Memuat...</p>
-      )}
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="bg-blue-300 p-6 rounded-lg shadow-lg w-full max-w-md md:max-w-2xl lg:max-w-4xl">
+        <h1 className="text-3xl font-bold mb-4 text-center text-gray-800">Cuaca di {CITY}</h1>
+        {weather ? (
+          <>
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <p className="text-lg">🌡 Suhu: {weather.temperature}°C</p>
+              <p className="text-lg">💨 Kecepatan Angin: {weather.windspeed} km/h</p>
+              <p className="text-lg">🧭 Arah Angin: {weather.winddirection}°</p>
+              <p className="text-lg">🌤 Kondisi: {getWeatherDescription(weather.weathercode)}</p>
+            </div>
+            <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">Prediksi Cuaca</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {forecast.map((f, index) => (
+                <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
+                  <p className="text-lg">{new Date(f.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                  <p className="text-lg">🌡 {f.temperature}°C</p>
+                  <p className="text-lg">{getWeatherDescription(f.weathercode)}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <p className="text-center text-white">Memuat...</p>
+        )}
+      </div>
     </div>
   );
 }
